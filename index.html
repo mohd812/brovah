@@ -486,21 +486,27 @@
       });
     });
 
+    // Appear at ~12% visible; disappear only once fully out of view (hysteresis, no flicker).
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+        if (e.isIntersecting && e.intersectionRatio >= 0.1) {
+          e.target.classList.add("in");
+        } else if (!e.isIntersecting) {
+          e.target.classList.remove("in");
+        }
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });
+    }, { threshold: [0, 0.12], rootMargin: "0px 0px -5% 0px" });
     document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
 
-    // Count-up stat numbers on first view.
+    // Count-up stat numbers each time they scroll into view.
     function countUp(el) {
-      var raw = el.textContent.trim();
-      var target = parseInt(raw.replace(/[^0-9]/g, ""), 10);
-      if (!target) return;
-      var prefix = raw.indexOf("+") !== -1 ? "+" : "";
+      if (el._active) return;
+      el._active = true;
+      var run = (el._run = (el._run || 0) + 1);
+      var target = el._target, prefix = el._prefix;
       var t0 = null, dur = 1400;
       function tick(t) {
+        if (el._run !== run) return;
         if (!t0) t0 = t;
         var p = Math.min((t - t0) / dur, 1);
         var eased = 1 - Math.pow(1 - p, 3);
@@ -511,10 +517,21 @@
     }
     var statIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) { countUp(e.target); statIO.unobserve(e.target); }
+        var el = e.target;
+        if (e.isIntersecting && e.intersectionRatio >= 0.5) countUp(el);
+        else if (!e.isIntersecting && el._active) {
+          el._active = false;
+          el._run = (el._run || 0) + 1;
+          el.textContent = el._prefix + "0";
+        }
       });
-    }, { threshold: 0.6 });
-    document.querySelectorAll(".stat b").forEach(function (el) { statIO.observe(el); });
+    }, { threshold: [0, 0.6] });
+    document.querySelectorAll(".stat b").forEach(function (el) {
+      var raw = el.textContent.trim();
+      el._target = parseInt(raw.replace(/[^0-9]/g, ""), 10) || 0;
+      el._prefix = raw.indexOf("+") !== -1 ? "+" : "";
+      statIO.observe(el);
+    });
   })();
   </script>
 
