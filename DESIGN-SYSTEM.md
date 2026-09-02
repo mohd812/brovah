@@ -44,7 +44,10 @@ Gradient (pattern accent only, not for text): `linear-gradient(90deg, transparen
 ## 3. Typography
 
 **Rubik** (Google Fonts) for both English and Arabic — the corporate typeface for all
-brand communication.
+brand communication. Exception (user-approved 2026-09-02): **Alexandria** (Google Fonts,
+700/800) for *Arabic display headlines only* (`.display`, `.section-title` when
+`lang="ar"`) — it carries display weight better in Arabic; Rubik remains for all Arabic
+body text and UI.
 
 Weights: **Bold 700**, SemiBold 600, Medium 500, Regular 400. (Use all four for hierarchy;
 nothing lighter than 400.)
