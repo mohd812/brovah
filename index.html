@@ -42,20 +42,27 @@
 
     .hero {
       padding: var(--s-12) 0 var(--s-8); position: relative; overflow: hidden;
-      background:
-        linear-gradient(90deg, var(--brovah-purple) 35%, rgba(24,22,42,0.72) 70%, rgba(24,22,42,0.45)),
-        url("assets/img/hero-guitars.jpg") right center / auto 100% no-repeat;
+      background: var(--brovah-purple);
     }
-    html[dir="rtl"] .hero {
-      background:
-        linear-gradient(270deg, var(--brovah-purple) 35%, rgba(24,22,42,0.72) 70%, rgba(24,22,42,0.45)),
-        url("assets/img/hero-guitars.jpg") left center / auto 100% no-repeat;
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background: url("assets/img/hero-guitars.jpg") right center / auto 100% no-repeat;
+      animation: heroZoom 26s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+    html[dir="rtl"] .hero-bg { background-position: left center; }
+    .hero-bg::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, var(--brovah-purple) 35%, rgba(24,22,42,0.72) 70%, rgba(24,22,42,0.45));
+    }
+    html[dir="rtl"] .hero-bg::after {
+      background: linear-gradient(270deg, var(--brovah-purple) 35%, rgba(24,22,42,0.72) 70%, rgba(24,22,42,0.45));
     }
     @media (max-width: 900px) {
-      .hero, html[dir="rtl"] .hero { background:
-        linear-gradient(rgba(24,22,42,0.88), rgba(24,22,42,0.88)),
-        url("assets/img/hero-guitars.jpg") center / cover no-repeat; }
+      .hero-bg, html[dir="rtl"] .hero-bg { background: url("assets/img/hero-guitars.jpg") center / cover no-repeat; }
+      .hero-bg::after, html[dir="rtl"] .hero-bg::after { background: rgba(24,22,42,0.88); }
     }
+    @keyframes heroZoom { from { transform: scale(1); } to { transform: scale(1.07); } }
     .hero .display span { color: var(--accent); }
     .hero .lead { margin: var(--s-3) 0 var(--s-4); color: #CBC9D6; }
     .hero-content { position: relative; }
@@ -74,6 +81,8 @@
 
     .grid { display: grid; gap: var(--s-3); }
     .grid.services { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin-top: var(--s-4); }
+    .card { transition: transform 0.25s ease, border-color 0.25s ease; }
+    .card:hover { transform: translateY(-5px); border-color: var(--brovah-purple-50); }
     .card .num { font-weight: 700; color: var(--accent); font-size: 0.9rem; }
     .card h3 { font-size: 1.2rem; font-weight: 600; margin: 0.4rem 0 0.5rem; }
     .card p { color: var(--text-muted); font-size: 0.95rem; }
@@ -95,16 +104,18 @@
 
     .projects { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: var(--s-4); }
     .project-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
-    .project-card img { width: 100%; height: 190px; object-fit: cover; }
+    .project-card img { width: 100%; height: 190px; object-fit: cover; transition: transform 0.5s ease; }
+    .project-card:hover img { transform: scale(1.05); }
     .project-card .project-body { padding: var(--s-3); }
     .project-tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brovah-purple); background: var(--accent); border-radius: 4px; padding: 0.15rem 0.5rem; margin-bottom: var(--s-2); }
 
     .studio-banner { height: 260px; background: url("assets/img/studio-mixer.jpg") center / cover no-repeat; position: relative; }
+    @media (pointer: fine) and (min-width: 900px) { .studio-banner { background-attachment: fixed; } }
     .studio-banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(24,22,42,0.35), rgba(24,22,42,0.35)); }
 
     .clients-wrap { margin-top: var(--s-4); display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .chip { border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 0.45rem 1.1rem; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s, border-color 0.2s; }
-    .chip:hover { color: var(--text); border-color: var(--brovah-purple-50); }
+    .chip { border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 0.45rem 1.1rem; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s, border-color 0.2s, transform 0.2s; }
+    .chip:hover { color: var(--text); border-color: var(--brovah-purple-50); transform: translateY(-2px); }
 
     .process { margin-top: var(--s-4); display: grid; gap: 0; }
     .step { display: grid; grid-template-columns: 48px 1fr; gap: var(--s-2); position: relative; padding-bottom: var(--s-3); }
@@ -123,6 +134,21 @@
     .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); flex-wrap: wrap; }
     .footer-inner img { height: 24px; }
     .footer-inner p { color: var(--brovah-purple-50); font-size: 0.85rem; }
+
+    /* --- motion --- */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.65s ease, transform 0.65s ease; transition-delay: var(--rd, 0s); }
+    .reveal.in { opacity: 1; transform: none; }
+    .ribbon { background-size: 200% 100%; animation: ribbonSheen 7s linear infinite; }
+    @keyframes ribbonSheen { from { background-position: 0% 0; } to { background-position: -200% 0; } }
+    .btn { will-change: transform; transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+    .btn:hover { transform: translateY(-2px); }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero-bg, .ribbon { animation: none; }
+      .card, .card:hover, .project-card img, .chip, .btn { transition: none; transform: none; }
+      .studio-banner { background-attachment: scroll; }
+      html { scroll-behavior: auto; }
+    }
 
     /* Arabic: no letter-spacing (breaks connected script), slightly taller lines */
     html[lang="ar"] .eyebrow, html[lang="ar"] .stat span, html[lang="ar"] .project-tag,
@@ -153,6 +179,7 @@
   <main id="top">
 
     <div class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
       <div class="container hero-content">
         <span class="eyebrow" data-i18n="hero_eyebrow">Brovah Studio &mdash; Music &amp; Audio Production, Riyadh</span>
         <h1 class="display" data-i18n="hero_title">More than<br>a <span>studio!</span></h1>
@@ -429,6 +456,65 @@
     var saved = null;
     try { saved = localStorage.getItem("brovah-lang"); } catch (e) {}
     if (saved === "ar") apply("ar");
+  })();
+
+  /* --- motion: scroll reveals & stat counters --- */
+  (function () {
+    "use strict";
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+
+    // Tag elements for reveal, staggering items inside each group.
+    var groups = [
+      ".hero-content > *",
+      ".stats .stat",
+      ".about-grid > *",
+      ".founder-grid > *",
+      ".grid.services .card",
+      ".grid.projects .card",
+      ".clients-wrap .chip",
+      ".process .step",
+      ".contact-grid .card",
+      "section .eyebrow, section .section-title"
+    ];
+    groups.forEach(function (sel) {
+      var i = 0;
+      document.querySelectorAll(sel).forEach(function (el) {
+        if (el.classList.contains("reveal")) return;
+        el.classList.add("reveal");
+        el.style.setProperty("--rd", Math.min(i * 0.08, 0.5) + "s");
+        i++;
+      });
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });
+    document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+
+    // Count-up stat numbers on first view.
+    function countUp(el) {
+      var raw = el.textContent.trim();
+      var target = parseInt(raw.replace(/[^0-9]/g, ""), 10);
+      if (!target) return;
+      var prefix = raw.indexOf("+") !== -1 ? "+" : "";
+      var t0 = null, dur = 1400;
+      function tick(t) {
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = prefix + Math.round(target * eased);
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    var statIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { countUp(e.target); statIO.unobserve(e.target); }
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll(".stat b").forEach(function (el) { statIO.observe(el); });
   })();
   </script>
 
