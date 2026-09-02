@@ -33,13 +33,19 @@
       .nav-logo img { height: 24px; }
     }
 
-    .hero { padding: var(--s-12) 0 var(--s-8); position: relative; overflow: hidden; }
+    .hero {
+      padding: var(--s-12) 0 var(--s-8); position: relative; overflow: hidden;
+      background:
+        linear-gradient(90deg, var(--brovah-purple) 35%, rgba(24,22,42,0.72) 70%, rgba(24,22,42,0.45)),
+        url("assets/img/hero-guitars.jpg") right center / auto 100% no-repeat;
+    }
+    @media (max-width: 900px) {
+      .hero { background:
+        linear-gradient(rgba(24,22,42,0.88), rgba(24,22,42,0.88)),
+        url("assets/img/hero-guitars.jpg") center / cover no-repeat; }
+    }
     .hero .display span { color: var(--accent); }
-    .hero .lead { margin: var(--s-3) 0 var(--s-4); }
-    .hero-ribbons { position: absolute; right: -10%; top: 18%; width: 55%; opacity: 0.5; pointer-events: none; }
-    .hero-ribbons div { height: 26px; margin-bottom: 26px; background: linear-gradient(90deg, transparent, var(--brovah-gold)); }
-    .hero-ribbons div:nth-child(2) { transform: translateX(-18%); }
-    .hero-ribbons div:nth-child(3) { transform: translateX(12%); }
+    .hero .lead { margin: var(--s-3) 0 var(--s-4); color: #CBC9D6; }
     .hero-content { position: relative; }
 
     .stats {
@@ -58,8 +64,28 @@
     .card h3 { font-size: 1.2rem; font-weight: 600; margin: 0.4rem 0 0.5rem; }
     .card p { color: var(--text-muted); font-size: 0.95rem; }
 
+    .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s-6); align-items: center; }
+    .about-grid img { border-radius: var(--radius); border: 1px solid var(--border); width: 100%; height: 100%; max-height: 560px; object-fit: cover; }
+    @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } .about-grid img { max-height: 340px; } }
+
+    .founder { background: var(--surface); border-block: 1px solid var(--border); }
+    .founder-grid { display: grid; grid-template-columns: 320px 1fr; gap: var(--s-6); align-items: center; }
+    .founder-grid img { border-radius: var(--radius); width: 100%; object-fit: cover; }
+    .founder blockquote { font-size: 1.15rem; line-height: 1.7; color: var(--text); max-width: 62ch; }
+    .founder blockquote::before { content: "\201C"; display: block; font-size: 4rem; line-height: 0.5; color: var(--accent); font-weight: 700; margin-bottom: 1rem; }
+    .founder cite { display: block; margin-top: var(--s-3); font-style: normal; }
+    .founder cite b { color: var(--accent); display: block; font-size: 1.05rem; }
+    .founder cite span { color: var(--text-muted); font-size: 0.9rem; }
+    @media (max-width: 800px) { .founder-grid { grid-template-columns: 1fr; } .founder-grid img { max-width: 320px; } }
+
     .projects { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: var(--s-4); }
+    .project-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+    .project-card img { width: 100%; height: 190px; object-fit: cover; }
+    .project-card .project-body { padding: var(--s-3); }
     .project-tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brovah-purple); background: var(--accent); border-radius: 4px; padding: 0.15rem 0.5rem; margin-bottom: var(--s-2); }
+
+    .studio-banner { height: 260px; background: url("assets/img/studio-mixer.jpg") center / cover no-repeat; position: relative; }
+    .studio-banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(24,22,42,0.35), rgba(24,22,42,0.35)); }
 
     .clients-wrap { margin-top: var(--s-4); display: flex; flex-wrap: wrap; gap: 0.75rem; }
     .chip { border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 0.45rem 1.1rem; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s, border-color 0.2s; }
@@ -103,7 +129,6 @@
   <main id="top">
 
     <div class="hero">
-      <div class="hero-ribbons" aria-hidden="true"><div></div><div></div><div></div></div>
       <div class="container hero-content">
         <span class="eyebrow">Brovah Studio &mdash; Music &amp; Audio Production, Riyadh</span>
         <h1 class="display">More than<br>a <span>studio!</span></h1>
@@ -124,15 +149,28 @@
     </div>
 
     <section id="about">
-      <div class="container">
-        <span class="eyebrow">Who we are</span>
-        <h2 class="section-title">Where creativity resonates</h2>
-        <p class="lead">We specialize in professional music production, recording, mixing, and creative audio services for artists, musicians, podcasters, film directors, and creative agencies. Founded in 2024 and built on structure, transparency, and long-term partnerships, Brovah combines high-level technical quality with a friendly, approachable studio culture.</p>
-        <p class="lead" style="margin-top:1rem">Our home is al-Mashtal Creative Space in Riyadh's Diplomatic Quarter &mdash; and our mission is to empower creators across Saudi Arabia and MENA with a professional, structured, and inspiring studio environment, building not just songs or content, but long-term creative careers.</p>
+      <div class="container about-grid">
+        <div>
+          <span class="eyebrow">Who we are</span>
+          <h2 class="section-title">Where creativity resonates</h2>
+          <p class="lead">We specialize in professional music production, recording, mixing, and creative audio services for artists, musicians, podcasters, film directors, and creative agencies. Founded in 2024 and built on structure, transparency, and long-term partnerships, Brovah combines high-level technical quality with a friendly, approachable studio culture.</p>
+          <p class="lead" style="margin-top:1rem">Our home is al-Mashtal Creative Space in Riyadh's Diplomatic Quarter &mdash; and our mission is to empower creators across Saudi Arabia and MENA with a professional, structured, and inspiring studio environment, building not just songs or content, but long-term creative careers.</p>
+        </div>
+        <img src="assets/img/neon-logo.jpg" alt="Brovah neon logo sign in the studio" loading="lazy">
       </div>
     </section>
 
     <div class="ribbon" aria-hidden="true"></div>
+
+    <section class="founder">
+      <div class="container founder-grid">
+        <img src="assets/img/founder.jpg" alt="Mugtaba Ali, Founder &amp; CEO of Brovah" loading="lazy">
+        <blockquote>
+          At the heart of Brovah is a belief I carry deeply: that creativity, when treated with care, intention, and respect, can grow into something extraordinary. Brovah was never meant to be just a studio &mdash; behind every song, podcast, brand, or sound is a story that deserves to be heard clearly, honestly, and with purpose.
+          <cite><b>Mugtaba Ali</b><span>Founder &amp; CEO, Brovah</span></cite>
+        </blockquote>
+      </div>
+    </section>
 
     <section id="services">
       <div class="container">
@@ -155,20 +193,29 @@
         <span class="eyebrow">Selected projects</span>
         <h2 class="section-title">Some of our work</h2>
         <div class="grid projects">
-          <div class="card">
-            <span class="project-tag">Full production</span>
-            <h3>Gamra Podcast &mdash; &#1602;&#1605;&#1585;&#1575;</h3>
-            <p>A podcast hosted by Gamar Muhammed, in conversation with fascinating guests from every field &mdash; produced end-to-end at Brovah.</p>
+          <div class="card project-card">
+            <img src="assets/img/project-gamra.jpg" alt="Gamra Podcast recording session" loading="lazy">
+            <div class="project-body">
+              <span class="project-tag">Full production</span>
+              <h3>Gamra Podcast &mdash; &#1602;&#1605;&#1585;&#1575;</h3>
+              <p>A podcast hosted by Gamar Muhammed, in conversation with fascinating guests from every field &mdash; produced end-to-end at Brovah.</p>
+            </div>
           </div>
-          <div class="card">
-            <span class="project-tag">Live session &middot; Recording &amp; mixing</span>
-            <h3>Gharem Studio Live</h3>
-            <p>A live studio reinterpretation of &ldquo;Loved By Me&rdquo; by American&ndash;Sudanese artist Selle Babiker, arranged and performed live by a lineup of professional musicians.</p>
+          <div class="card project-card">
+            <img src="assets/img/project-gharem.jpg" alt="Musicians performing live at Gharem Studio" loading="lazy">
+            <div class="project-body">
+              <span class="project-tag">Live session &middot; Recording &amp; mixing</span>
+              <h3>Gharem Studio Live</h3>
+              <p>A live studio reinterpretation of &ldquo;Loved By Me&rdquo; by American&ndash;Sudanese artist Selle Babiker, arranged and performed live by a lineup of professional musicians.</p>
+            </div>
           </div>
-          <div class="card">
-            <span class="project-tag">Film &middot; Multitrack recording</span>
-            <h3>Almahitiya Movie</h3>
-            <p>Live band multitrack recording for the 2026 comedy feature by director Ahmed Alnajdi.</p>
+          <div class="card project-card">
+            <img src="assets/img/project-almahitiya.jpg" alt="On the set of Almahitiya Movie" loading="lazy">
+            <div class="project-body">
+              <span class="project-tag">Film &middot; Multitrack recording</span>
+              <h3>Almahitiya Movie</h3>
+              <p>Live band multitrack recording for the 2026 comedy feature by director Ahmed Alnajdi.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -197,7 +244,7 @@
       </div>
     </section>
 
-    <div class="ribbon reverse" aria-hidden="true"></div>
+    <div class="studio-banner" role="img" aria-label="Close-up of studio recording equipment"></div>
 
     <section id="process">
       <div class="container">
