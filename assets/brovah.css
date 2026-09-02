@@ -1,0 +1,123 @@
+/* ==========================================================================
+   Brovah Design System — tokens & base components
+   See DESIGN-SYSTEM.md. Source: Brovah Brand Guidelines 2024.
+   ========================================================================== */
+
+:root {
+  /* Color */
+  --brovah-gold: #CCAF2D;
+  --brovah-gold-dark: #B39A24;
+  --brovah-gold-50: #E6D796;
+  --brovah-purple: #18162A;
+  --brovah-purple-surface: #211E38;
+  --brovah-purple-border: #2E2B47;
+  --brovah-purple-50: #8C8B95;
+  --brovah-white: #FFFFFF;
+
+  /* Semantic */
+  --bg: var(--brovah-purple);
+  --surface: var(--brovah-purple-surface);
+  --border: var(--brovah-purple-border);
+  --text: var(--brovah-white);
+  --text-muted: #B9B7C4;
+  --accent: var(--brovah-gold);
+
+  /* Type */
+  --font-sans: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+
+  /* Spacing (8px scale) */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-6: 3rem;
+  --s-8: 4rem;
+  --s-12: 6rem;
+
+  --radius: 8px;
+  --radius-pill: 999px;
+  --content-width: 1100px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--brovah-gold-50); }
+
+.container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- Typography --- */
+.display {
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+h2.section-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin-bottom: var(--s-3);
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-2);
+}
+
+.lead { font-size: 1.125rem; color: var(--text-muted); max-width: 60ch; }
+
+/* --- Buttons --- */
+.btn {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.9rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.btn-primary { background: var(--accent); color: var(--brovah-purple); }
+.btn-primary:hover { background: var(--brovah-gold-dark); color: var(--brovah-purple); }
+.btn-ghost { border: 1px solid var(--brovah-purple-50); color: var(--text); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* --- Cards --- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s-3);
+}
+
+/* --- Gold ribbon motif (brand pattern) --- */
+.ribbon {
+  height: 10px;
+  background: linear-gradient(90deg, transparent, var(--brovah-gold));
+  border: 0;
+}
+.ribbon.reverse { background: linear-gradient(270deg, transparent, var(--brovah-gold)); }

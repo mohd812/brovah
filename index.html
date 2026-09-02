@@ -3,92 +3,239 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Brovah</title>
-  <meta name="description" content="Brovah — something new is on the way.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x25C6;</text></svg>">
+  <title>Brovah Studio — Music &amp; Audio Production, Riyadh</title>
+  <meta name="description" content="Brovah is a forward-thinking music and audio production studio in Riyadh's Diplomatic Quarter, serving artists, podcasters, film directors and creative agencies across Saudi Arabia and MENA.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/brovah.css">
   <style>
-    :root {
-      --bg: #0b0d10;
-      --surface: #14171c;
-      --text: #f2f4f7;
-      --muted: #9aa3af;
-      --accent: #e8b84b;
-      --border: #242932;
+    /* --- page-specific layout --- */
+    header.nav {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(24, 22, 42, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
     }
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg: #faf9f6;
-        --surface: #ffffff;
-        --text: #16181d;
-        --muted: #5c6470;
-        --accent: #b8860b;
-        --border: #e6e2d8;
-      }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1rem; padding-bottom: 1rem;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      -webkit-font-smoothing: antialiased;
+    .nav-logo img { height: 30px; }
+    .nav-links { display: flex; gap: var(--s-3); align-items: center; }
+    .nav-links a { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links .btn { color: var(--brovah-purple); }
+    @media (max-width: 720px) {
+      .nav-links a:not(.btn) { display: none; }
+      .nav-links .btn { padding: 0.55rem 1.1rem; font-size: 0.85rem; }
+      .nav-logo img { height: 24px; }
     }
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem 1.5rem;
+
+    .hero { padding: var(--s-12) 0 var(--s-8); position: relative; overflow: hidden; }
+    .hero .display span { color: var(--accent); }
+    .hero .lead { margin: var(--s-3) 0 var(--s-4); }
+    .hero-ribbons { position: absolute; right: -10%; top: 18%; width: 55%; opacity: 0.5; pointer-events: none; }
+    .hero-ribbons div { height: 26px; margin-bottom: 26px; background: linear-gradient(90deg, transparent, var(--brovah-gold)); }
+    .hero-ribbons div:nth-child(2) { transform: translateX(-18%); }
+    .hero-ribbons div:nth-child(3) { transform: translateX(12%); }
+    .hero-content { position: relative; }
+
+    .stats {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--s-3); padding: var(--s-6) 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
     }
-    .mark {
-      font-size: 2rem;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-    }
-    h1 {
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .tagline {
-      margin-top: 1rem;
-      font-size: clamp(1.05rem, 2.5vw, 1.35rem);
-      color: var(--muted);
-      max-width: 34ch;
-      line-height: 1.5;
-    }
-    .cta {
-      margin-top: 2.5rem;
-      display: inline-block;
-      padding: 0.8rem 1.8rem;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--surface);
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: border-color 0.2s ease;
-    }
-    .cta:hover { border-color: var(--accent); }
-    footer {
-      padding: 1.5rem;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
+    .stat b { display: block; font-size: clamp(2.25rem, 4vw, 3.25rem); font-weight: 700; color: var(--accent); line-height: 1; }
+    .stat span { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+
+    section { padding: var(--s-12) 0; }
+    @media (max-width: 720px) { section { padding: var(--s-8) 0; } }
+
+    .grid { display: grid; gap: var(--s-3); }
+    .grid.services { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin-top: var(--s-4); }
+    .card .num { font-weight: 700; color: var(--accent); font-size: 0.9rem; }
+    .card h3 { font-size: 1.2rem; font-weight: 600; margin: 0.4rem 0 0.5rem; }
+    .card p { color: var(--text-muted); font-size: 0.95rem; }
+
+    .projects { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: var(--s-4); }
+    .project-tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brovah-purple); background: var(--accent); border-radius: 4px; padding: 0.15rem 0.5rem; margin-bottom: var(--s-2); }
+
+    .clients-wrap { margin-top: var(--s-4); display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .chip { border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 0.45rem 1.1rem; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s, border-color 0.2s; }
+    .chip:hover { color: var(--text); border-color: var(--brovah-purple-50); }
+
+    .process { margin-top: var(--s-4); display: grid; gap: 0; }
+    .step { display: grid; grid-template-columns: 48px 1fr; gap: var(--s-2); position: relative; padding-bottom: var(--s-3); }
+    .step .dot { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); margin: 4px auto 0; position: relative; z-index: 1; }
+    .step::before { content: ""; position: absolute; left: 23px; top: 8px; bottom: -4px; width: 2px; background: var(--border); }
+    .step:last-child::before { display: none; }
+    .step h3 { font-size: 1.05rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+    .step p { color: var(--text-muted); font-size: 0.95rem; max-width: 62ch; }
+
+    .contact-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: var(--s-4); }
+    .contact-grid .card a { font-weight: 600; word-break: break-word; }
+    .contact-grid .card .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.4rem; }
+
+    footer { border-top: 1px solid var(--border); padding: var(--s-4) 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); flex-wrap: wrap; }
+    .footer-inner img { height: 24px; }
+    .footer-inner p { color: var(--brovah-purple-50); font-size: 0.85rem; }
   </style>
 </head>
 <body>
-  <main>
-    <div class="mark">&#x25C6;</div>
-    <h1>Brovah</h1>
-    <p class="tagline">Something new is on the way. We're building quietly &mdash; check back soon.</p>
-    <a class="cta" href="mailto:hello@brovah.com">Get in touch</a>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="nav-logo" href="#top" aria-label="Brovah home">
+        <img src="assets/logo-gold.svg" alt="Brovah" width="226" height="54">
+      </a>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a class="btn btn-primary" href="#contact">Let's work together</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <div class="hero">
+      <div class="hero-ribbons" aria-hidden="true"><div></div><div></div><div></div></div>
+      <div class="container hero-content">
+        <span class="eyebrow">Brovah Studio &mdash; Music &amp; Audio Production, Riyadh</span>
+        <h1 class="display">More than<br>a <span>studio!</span></h1>
+        <p class="lead">Brovah is a forward-thinking music and audio production studio based in Saudi Arabia, serving clients across the MENA region and beyond &mdash; where creativity meets discipline, and every project is treated as both art and business.</p>
+        <a class="btn btn-primary" href="#contact">Start a project</a>
+        <a class="btn btn-ghost" href="#work">See our work</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="stats">
+        <div class="stat"><b>+250</b><span>Projects</span></div>
+        <div class="stat"><b>+30</b><span>Clients</span></div>
+        <div class="stat"><b>+100</b><span>Collaborations</span></div>
+        <div class="stat"><b>+1000</b><span>Hours recorded</span></div>
+        <div class="stat"><b>+15</b><span>Years of experience</span></div>
+      </div>
+    </div>
+
+    <section id="about">
+      <div class="container">
+        <span class="eyebrow">Who we are</span>
+        <h2 class="section-title">Where creativity resonates</h2>
+        <p class="lead">We specialize in professional music production, recording, mixing, and creative audio services for artists, musicians, podcasters, film directors, and creative agencies. Founded in 2024 and built on structure, transparency, and long-term partnerships, Brovah combines high-level technical quality with a friendly, approachable studio culture.</p>
+        <p class="lead" style="margin-top:1rem">Our home is al-Mashtal Creative Space in Riyadh's Diplomatic Quarter &mdash; and our mission is to empower creators across Saudi Arabia and MENA with a professional, structured, and inspiring studio environment, building not just songs or content, but long-term creative careers.</p>
+      </div>
+    </section>
+
+    <div class="ribbon" aria-hidden="true"></div>
+
+    <section id="services">
+      <div class="container">
+        <span class="eyebrow">What we do</span>
+        <h2 class="section-title">Specialties &amp; services</h2>
+        <div class="grid services">
+          <div class="card"><span class="num">01</span><h3>Music Production</h3><p>Full production from idea to final master, treated with care, intention, and respect.</p></div>
+          <div class="card"><span class="num">02</span><h3>Recording Services</h3><p>Professional tracking sessions in an acoustically treated, fully equipped studio.</p></div>
+          <div class="card"><span class="num">03</span><h3>Mixing &amp; Mastering</h3><p>World-class engineering that makes every song translate on every system.</p></div>
+          <div class="card"><span class="num">04</span><h3>Podcast &amp; Audio Content</h3><p>End-to-end podcast production &mdash; recording, editing, and delivery.</p></div>
+          <div class="card"><span class="num">05</span><h3>Commercial &amp; Media Audio</h3><p>Sound for film, advertising, and media &mdash; including live band multitrack recording.</p></div>
+          <div class="card"><span class="num">06</span><h3>Artist Development</h3><p>Long-term creative partnership to grow careers, not just catalogues.</p></div>
+          <div class="card"><span class="num">07</span><h3>Creative Partnerships</h3><p>Structured collaborations with labels, agencies, and media companies.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" style="padding-top:0">
+      <div class="container">
+        <span class="eyebrow">Selected projects</span>
+        <h2 class="section-title">Some of our work</h2>
+        <div class="grid projects">
+          <div class="card">
+            <span class="project-tag">Full production</span>
+            <h3>Gamra Podcast &mdash; &#1602;&#1605;&#1585;&#1575;</h3>
+            <p>A podcast hosted by Gamar Muhammed, in conversation with fascinating guests from every field &mdash; produced end-to-end at Brovah.</p>
+          </div>
+          <div class="card">
+            <span class="project-tag">Live session &middot; Recording &amp; mixing</span>
+            <h3>Gharem Studio Live</h3>
+            <p>A live studio reinterpretation of &ldquo;Loved By Me&rdquo; by American&ndash;Sudanese artist Selle Babiker, arranged and performed live by a lineup of professional musicians.</p>
+          </div>
+          <div class="card">
+            <span class="project-tag">Film &middot; Multitrack recording</span>
+            <h3>Almahitiya Movie</h3>
+            <p>Live band multitrack recording for the 2026 comedy feature by director Ahmed Alnajdi.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="clients" style="padding-top:0">
+      <div class="container">
+        <span class="eyebrow">Trusted by</span>
+        <h2 class="section-title">Some of our clients</h2>
+        <div class="clients-wrap">
+          <span class="chip">Ministry of Culture</span>
+          <span class="chip">stc</span>
+          <span class="chip">MDLBEAST</span>
+          <span class="chip">National Geographic</span>
+          <span class="chip">Music Commission</span>
+          <span class="chip">AlMashtal</span>
+          <span class="chip">fiftyfive</span>
+          <span class="chip">Literature, Publishing &amp; Translation Commission</span>
+          <span class="chip">Merwas</span>
+          <span class="chip">Costa</span>
+          <span class="chip">Disney</span>
+          <span class="chip">Hawi</span>
+          <span class="chip">Aflam Productions</span>
+          <span class="chip">&amp; many more&hellip;</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="ribbon reverse" aria-hidden="true"></div>
+
+    <section id="process">
+      <div class="container">
+        <span class="eyebrow">How we work</span>
+        <h2 class="section-title">Our process</h2>
+        <div class="process">
+          <div class="step"><div><span class="dot"></span></div><div><h3>Discovery &amp; Qualification</h3><p>We align on objectives, scope, timeline, and budget before any creative work starts &mdash; ensuring every project is viable both creatively and financially.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3>Scope &amp; Financial Structure</h3><p>Deliverables, revision limits, timelines, and exclusions defined in clear terms and priced transparently.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3>Agreement &amp; Confirmation</h3><p>A formal proposal and agreement covering all terms; scheduling and production planning begin on signing.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3>Pre-Production Alignment</h3><p>Creative references, direction, and technical details collected in writing &mdash; minimizing revisions and miscommunication later.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3>Production Execution</h3><p>Structured milestones with controlled feedback intervals, progressing to the agreed scope.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3>Review &amp; Refinement</h3><p>Structured client feedback and revisions within agreed limits &mdash; organized and professional throughout.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3>Finalization &amp; Delivery</h3><p>Deliverables exported and delivered in agreed formats; credits, usage rights, and permissions reconfirmed, then archived securely.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" style="padding-top:0">
+      <div class="container">
+        <span class="eyebrow">Let's work together</span>
+        <h2 class="section-title">Contact us</h2>
+        <div class="grid contact-grid">
+          <div class="card"><span class="label">Email</span><a href="mailto:info@brovah.com">info@brovah.com</a></div>
+          <div class="card"><span class="label">Phone / WhatsApp</span><a href="tel:+966556322154">+966 55 632 2154</a></div>
+          <div class="card"><span class="label">Social</span><a href="https://instagram.com/brovahstudio" rel="noopener">@brovahstudio</a></div>
+          <div class="card"><span class="label">Studio</span>al-Mashtal Creative Space, Diplomatic Quarter, Riyadh, Saudi Arabia</div>
+        </div>
+      </div>
+    </section>
+
   </main>
-  <footer>&copy; 2026 Brovah. All rights reserved.</footer>
+
+  <footer>
+    <div class="container footer-inner">
+      <img src="assets/logo-gold.svg" alt="Brovah">
+      <p>&copy; 2026 Brovah Studio &mdash; Music &amp; Audio Production. All rights reserved.</p>
+    </div>
+  </footer>
+
 </body>
 </html>

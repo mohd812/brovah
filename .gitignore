@@ -1,0 +1,3 @@
+brand/*
+!brand/README.md
+.DS_Store
