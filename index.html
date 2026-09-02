@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,13 +20,20 @@
     }
     .nav-inner {
       display: flex; align-items: center; justify-content: space-between;
-      padding-top: 1rem; padding-bottom: 1rem;
+      padding-top: 1rem; padding-bottom: 1rem; gap: 1rem;
     }
     .nav-logo img { height: 30px; }
     .nav-links { display: flex; gap: var(--s-3); align-items: center; }
     .nav-links a { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; }
     .nav-links a:hover { color: var(--accent); }
-    .nav-links .btn { color: var(--brovah-purple); }
+    .nav-links .btn-primary { color: var(--brovah-purple); }
+    .lang-toggle {
+      border: 1px solid var(--brovah-purple-50); border-radius: var(--radius-pill);
+      background: none; color: var(--text); font-family: var(--font-sans);
+      font-weight: 600; font-size: 0.85rem; padding: 0.45rem 1rem; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s; white-space: nowrap;
+    }
+    .lang-toggle:hover { border-color: var(--accent); color: var(--accent); }
     @media (max-width: 720px) {
       .nav-links a:not(.btn) { display: none; }
       .nav-links .btn { padding: 0.55rem 1.1rem; font-size: 0.85rem; }
@@ -39,20 +46,27 @@
         linear-gradient(90deg, var(--brovah-purple) 35%, rgba(24,22,42,0.72) 70%, rgba(24,22,42,0.45)),
         url("assets/img/hero-guitars.jpg") right center / auto 100% no-repeat;
     }
+    html[dir="rtl"] .hero {
+      background:
+        linear-gradient(270deg, var(--brovah-purple) 35%, rgba(24,22,42,0.72) 70%, rgba(24,22,42,0.45)),
+        url("assets/img/hero-guitars.jpg") left center / auto 100% no-repeat;
+    }
     @media (max-width: 900px) {
-      .hero { background:
+      .hero, html[dir="rtl"] .hero { background:
         linear-gradient(rgba(24,22,42,0.88), rgba(24,22,42,0.88)),
         url("assets/img/hero-guitars.jpg") center / cover no-repeat; }
     }
     .hero .display span { color: var(--accent); }
     .hero .lead { margin: var(--s-3) 0 var(--s-4); color: #CBC9D6; }
     .hero-content { position: relative; }
+    .hero .btn + .btn { margin-inline-start: 0.5rem; }
 
     .stats {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: var(--s-3); padding: var(--s-6) 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
     }
-    .stat b { display: block; font-size: clamp(2.25rem, 4vw, 3.25rem); font-weight: 700; color: var(--accent); line-height: 1; }
+    .stat b { display: block; font-size: clamp(2.25rem, 4vw, 3.25rem); font-weight: 700; color: var(--accent); line-height: 1; direction: ltr; unicode-bidi: isolate; text-align: inherit; }
+    html[dir="rtl"] .stat { text-align: right; }
     .stat span { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
 
     section { padding: var(--s-12) 0; }
@@ -73,6 +87,7 @@
     .founder-grid img { border-radius: var(--radius); width: 100%; object-fit: cover; }
     .founder blockquote { font-size: 1.15rem; line-height: 1.7; color: var(--text); max-width: 62ch; }
     .founder blockquote::before { content: "\201C"; display: block; font-size: 4rem; line-height: 0.5; color: var(--accent); font-weight: 700; margin-bottom: 1rem; }
+    html[dir="rtl"] .founder blockquote::before { content: "\201D"; }
     .founder cite { display: block; margin-top: var(--s-3); font-style: normal; }
     .founder cite b { color: var(--accent); display: block; font-size: 1.05rem; }
     .founder cite span { color: var(--text-muted); font-size: 0.9rem; }
@@ -94,19 +109,27 @@
     .process { margin-top: var(--s-4); display: grid; gap: 0; }
     .step { display: grid; grid-template-columns: 48px 1fr; gap: var(--s-2); position: relative; padding-bottom: var(--s-3); }
     .step .dot { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); margin: 4px auto 0; position: relative; z-index: 1; }
-    .step::before { content: ""; position: absolute; left: 23px; top: 8px; bottom: -4px; width: 2px; background: var(--border); }
+    .step::before { content: ""; position: absolute; inset-inline-start: 23px; top: 8px; bottom: -4px; width: 2px; background: var(--border); }
     .step:last-child::before { display: none; }
     .step h3 { font-size: 1.05rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
     .step p { color: var(--text-muted); font-size: 0.95rem; max-width: 62ch; }
 
     .contact-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: var(--s-4); }
     .contact-grid .card a { font-weight: 600; word-break: break-word; }
+    .contact-grid .card a[href^="tel"], .contact-grid .card a[href^="mailto"] { direction: ltr; unicode-bidi: embed; }
     .contact-grid .card .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.4rem; }
 
     footer { border-top: 1px solid var(--border); padding: var(--s-4) 0; }
     .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); flex-wrap: wrap; }
     .footer-inner img { height: 24px; }
     .footer-inner p { color: var(--brovah-purple-50); font-size: 0.85rem; }
+
+    /* Arabic: no letter-spacing (breaks connected script), slightly taller lines */
+    html[lang="ar"] .eyebrow, html[lang="ar"] .stat span, html[lang="ar"] .project-tag,
+    html[lang="ar"] .step h3, html[lang="ar"] .contact-grid .card .label { letter-spacing: 0; }
+    html[lang="ar"] .display { letter-spacing: 0; line-height: 1.25; }
+    html[lang="ar"] h2.section-title { line-height: 1.3; }
+    html[lang="ar"] body, html[lang="ar"] .lead { line-height: 1.8; }
   </style>
 </head>
 <body>
@@ -117,11 +140,12 @@
         <img src="assets/logo-gold.svg" alt="Brovah" width="226" height="54">
       </a>
       <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#work">Work</a>
-        <a href="#process">Process</a>
-        <a class="btn btn-primary" href="#contact">Let's work together</a>
+        <a href="#about" data-i18n="nav_about">About</a>
+        <a href="#services" data-i18n="nav_services">Services</a>
+        <a href="#work" data-i18n="nav_work">Work</a>
+        <a href="#process" data-i18n="nav_process">Process</a>
+        <a class="btn btn-primary" href="#contact" data-i18n="nav_cta">Let's work together</a>
+        <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">&#1593;&#1585;&#1576;&#1610;</button>
       </nav>
     </div>
   </header>
@@ -130,31 +154,31 @@
 
     <div class="hero">
       <div class="container hero-content">
-        <span class="eyebrow">Brovah Studio &mdash; Music &amp; Audio Production, Riyadh</span>
-        <h1 class="display">More than<br>a <span>studio!</span></h1>
-        <p class="lead">Brovah is a forward-thinking music and audio production studio based in Saudi Arabia, serving clients across the MENA region and beyond &mdash; where creativity meets discipline, and every project is treated as both art and business.</p>
-        <a class="btn btn-primary" href="#contact">Start a project</a>
-        <a class="btn btn-ghost" href="#work">See our work</a>
+        <span class="eyebrow" data-i18n="hero_eyebrow">Brovah Studio &mdash; Music &amp; Audio Production, Riyadh</span>
+        <h1 class="display" data-i18n="hero_title">More than<br>a <span>studio!</span></h1>
+        <p class="lead" data-i18n="hero_lead">Brovah is a forward-thinking music and audio production studio based in Saudi Arabia, serving clients across the MENA region and beyond &mdash; where creativity meets discipline, and every project is treated as both art and business.</p>
+        <a class="btn btn-primary" href="#contact" data-i18n="hero_cta1">Start a project</a>
+        <a class="btn btn-ghost" href="#work" data-i18n="hero_cta2">See our work</a>
       </div>
     </div>
 
     <div class="container">
       <div class="stats">
-        <div class="stat"><b>+250</b><span>Projects</span></div>
-        <div class="stat"><b>+30</b><span>Clients</span></div>
-        <div class="stat"><b>+100</b><span>Collaborations</span></div>
-        <div class="stat"><b>+1000</b><span>Hours recorded</span></div>
-        <div class="stat"><b>+15</b><span>Years of experience</span></div>
+        <div class="stat"><b>+250</b><span data-i18n="stat_projects">Projects</span></div>
+        <div class="stat"><b>+30</b><span data-i18n="stat_clients">Clients</span></div>
+        <div class="stat"><b>+100</b><span data-i18n="stat_collabs">Collaborations</span></div>
+        <div class="stat"><b>+1000</b><span data-i18n="stat_hours">Hours recorded</span></div>
+        <div class="stat"><b>+15</b><span data-i18n="stat_years">Years of experience</span></div>
       </div>
     </div>
 
     <section id="about">
       <div class="container about-grid">
         <div>
-          <span class="eyebrow">Who we are</span>
-          <h2 class="section-title">Where creativity resonates</h2>
-          <p class="lead">We specialize in professional music production, recording, mixing, and creative audio services for artists, musicians, podcasters, film directors, and creative agencies. Founded in 2024 and built on structure, transparency, and long-term partnerships, Brovah combines high-level technical quality with a friendly, approachable studio culture.</p>
-          <p class="lead" style="margin-top:1rem">Our home is al-Mashtal Creative Space in Riyadh's Diplomatic Quarter &mdash; and our mission is to empower creators across Saudi Arabia and MENA with a professional, structured, and inspiring studio environment, building not just songs or content, but long-term creative careers.</p>
+          <span class="eyebrow" data-i18n="about_eyebrow">Who we are</span>
+          <h2 class="section-title" data-i18n="about_title">Where creativity resonates</h2>
+          <p class="lead" data-i18n="about_p1">We specialize in professional music production, recording, mixing, and creative audio services for artists, musicians, podcasters, film directors, and creative agencies. Founded in 2024 and built on structure, transparency, and long-term partnerships, Brovah combines high-level technical quality with a friendly, approachable studio culture.</p>
+          <p class="lead" style="margin-top:1rem" data-i18n="about_p2">Our home is al-Mashtal Creative Space in Riyadh's Diplomatic Quarter &mdash; and our mission is to empower creators across Saudi Arabia and MENA with a professional, structured, and inspiring studio environment, building not just songs or content, but long-term creative careers.</p>
         </div>
         <img src="assets/img/neon-logo.jpg" alt="Brovah neon logo sign in the studio" loading="lazy">
       </div>
@@ -166,55 +190,55 @@
       <div class="container founder-grid">
         <img src="assets/img/founder.jpg" alt="Mugtaba Ali, Founder &amp; CEO of Brovah" loading="lazy">
         <blockquote>
-          At the heart of Brovah is a belief I carry deeply: that creativity, when treated with care, intention, and respect, can grow into something extraordinary. Brovah was never meant to be just a studio &mdash; behind every song, podcast, brand, or sound is a story that deserves to be heard clearly, honestly, and with purpose.
-          <cite><b>Mugtaba Ali</b><span>Founder &amp; CEO, Brovah</span></cite>
+          <span data-i18n="founder_quote">At the heart of Brovah is a belief I carry deeply: that creativity, when treated with care, intention, and respect, can grow into something extraordinary. Brovah was never meant to be just a studio &mdash; behind every song, podcast, brand, or sound is a story that deserves to be heard clearly, honestly, and with purpose.</span>
+          <cite><b data-i18n="founder_name">Mugtaba Ali</b><span data-i18n="founder_role">Founder &amp; CEO, Brovah</span></cite>
         </blockquote>
       </div>
     </section>
 
     <section id="services">
       <div class="container">
-        <span class="eyebrow">What we do</span>
-        <h2 class="section-title">Specialties &amp; services</h2>
+        <span class="eyebrow" data-i18n="services_eyebrow">What we do</span>
+        <h2 class="section-title" data-i18n="services_title">Specialties &amp; services</h2>
         <div class="grid services">
-          <div class="card"><span class="num">01</span><h3>Music Production</h3><p>Full production from idea to final master, treated with care, intention, and respect.</p></div>
-          <div class="card"><span class="num">02</span><h3>Recording Services</h3><p>Professional tracking sessions in an acoustically treated, fully equipped studio.</p></div>
-          <div class="card"><span class="num">03</span><h3>Mixing &amp; Mastering</h3><p>World-class engineering that makes every song translate on every system.</p></div>
-          <div class="card"><span class="num">04</span><h3>Podcast &amp; Audio Content</h3><p>End-to-end podcast production &mdash; recording, editing, and delivery.</p></div>
-          <div class="card"><span class="num">05</span><h3>Commercial &amp; Media Audio</h3><p>Sound for film, advertising, and media &mdash; including live band multitrack recording.</p></div>
-          <div class="card"><span class="num">06</span><h3>Artist Development</h3><p>Long-term creative partnership to grow careers, not just catalogues.</p></div>
-          <div class="card"><span class="num">07</span><h3>Creative Partnerships</h3><p>Structured collaborations with labels, agencies, and media companies.</p></div>
+          <div class="card"><span class="num">01</span><h3 data-i18n="s1t">Music Production</h3><p data-i18n="s1d">Full production from idea to final master, treated with care, intention, and respect.</p></div>
+          <div class="card"><span class="num">02</span><h3 data-i18n="s2t">Recording Services</h3><p data-i18n="s2d">Professional tracking sessions in an acoustically treated, fully equipped studio.</p></div>
+          <div class="card"><span class="num">03</span><h3 data-i18n="s3t">Mixing &amp; Mastering</h3><p data-i18n="s3d">World-class engineering that makes every song translate on every system.</p></div>
+          <div class="card"><span class="num">04</span><h3 data-i18n="s4t">Podcast &amp; Audio Content</h3><p data-i18n="s4d">End-to-end podcast production &mdash; recording, editing, and delivery.</p></div>
+          <div class="card"><span class="num">05</span><h3 data-i18n="s5t">Commercial &amp; Media Audio</h3><p data-i18n="s5d">Sound for film, advertising, and media &mdash; including live band multitrack recording.</p></div>
+          <div class="card"><span class="num">06</span><h3 data-i18n="s6t">Artist Development</h3><p data-i18n="s6d">Long-term creative partnership to grow careers, not just catalogues.</p></div>
+          <div class="card"><span class="num">07</span><h3 data-i18n="s7t">Creative Partnerships</h3><p data-i18n="s7d">Structured collaborations with labels, agencies, and media companies.</p></div>
         </div>
       </div>
     </section>
 
     <section id="work" style="padding-top:0">
       <div class="container">
-        <span class="eyebrow">Selected projects</span>
-        <h2 class="section-title">Some of our work</h2>
+        <span class="eyebrow" data-i18n="work_eyebrow">Selected projects</span>
+        <h2 class="section-title" data-i18n="work_title">Some of our work</h2>
         <div class="grid projects">
           <div class="card project-card">
             <img src="assets/img/project-gamra.jpg" alt="Gamra Podcast recording session" loading="lazy">
             <div class="project-body">
-              <span class="project-tag">Full production</span>
-              <h3>Gamra Podcast &mdash; &#1602;&#1605;&#1585;&#1575;</h3>
-              <p>A podcast hosted by Gamar Muhammed, in conversation with fascinating guests from every field &mdash; produced end-to-end at Brovah.</p>
+              <span class="project-tag" data-i18n="p1tag">Full production</span>
+              <h3 data-i18n="p1t">Gamra Podcast &mdash; &#1602;&#1605;&#1585;&#1575;</h3>
+              <p data-i18n="p1d">A podcast hosted by Gamar Muhammed, in conversation with fascinating guests from every field &mdash; produced end-to-end at Brovah.</p>
             </div>
           </div>
           <div class="card project-card">
             <img src="assets/img/project-gharem.jpg" alt="Musicians performing live at Gharem Studio" loading="lazy">
             <div class="project-body">
-              <span class="project-tag">Live session &middot; Recording &amp; mixing</span>
-              <h3>Gharem Studio Live</h3>
-              <p>A live studio reinterpretation of &ldquo;Loved By Me&rdquo; by American&ndash;Sudanese artist Selle Babiker, arranged and performed live by a lineup of professional musicians.</p>
+              <span class="project-tag" data-i18n="p2tag">Live session &middot; Recording &amp; mixing</span>
+              <h3 data-i18n="p2t">Gharem Studio Live</h3>
+              <p data-i18n="p2d">A live studio reinterpretation of &ldquo;Loved By Me&rdquo; by American&ndash;Sudanese artist Selle Babiker, arranged and performed live by a lineup of professional musicians.</p>
             </div>
           </div>
           <div class="card project-card">
             <img src="assets/img/project-almahitiya.jpg" alt="On the set of Almahitiya Movie" loading="lazy">
             <div class="project-body">
-              <span class="project-tag">Film &middot; Multitrack recording</span>
-              <h3>Almahitiya Movie</h3>
-              <p>Live band multitrack recording for the 2026 comedy feature by director Ahmed Alnajdi.</p>
+              <span class="project-tag" data-i18n="p3tag">Film &middot; Multitrack recording</span>
+              <h3 data-i18n="p3t">Almahitiya Movie</h3>
+              <p data-i18n="p3d">Live band multitrack recording for the 2026 comedy feature by director Ahmed Alnajdi.</p>
             </div>
           </div>
         </div>
@@ -223,23 +247,23 @@
 
     <section id="clients" style="padding-top:0">
       <div class="container">
-        <span class="eyebrow">Trusted by</span>
-        <h2 class="section-title">Some of our clients</h2>
+        <span class="eyebrow" data-i18n="clients_eyebrow">Trusted by</span>
+        <h2 class="section-title" data-i18n="clients_title">Some of our clients</h2>
         <div class="clients-wrap">
-          <span class="chip">Ministry of Culture</span>
+          <span class="chip" data-i18n="c1">Ministry of Culture</span>
           <span class="chip">stc</span>
           <span class="chip">MDLBEAST</span>
-          <span class="chip">National Geographic</span>
-          <span class="chip">Music Commission</span>
-          <span class="chip">AlMashtal</span>
+          <span class="chip" data-i18n="c4">National Geographic</span>
+          <span class="chip" data-i18n="c5">Music Commission</span>
+          <span class="chip" data-i18n="c6">AlMashtal</span>
           <span class="chip">fiftyfive</span>
-          <span class="chip">Literature, Publishing &amp; Translation Commission</span>
-          <span class="chip">Merwas</span>
-          <span class="chip">Costa</span>
-          <span class="chip">Disney</span>
-          <span class="chip">Hawi</span>
-          <span class="chip">Aflam Productions</span>
-          <span class="chip">&amp; many more&hellip;</span>
+          <span class="chip" data-i18n="c8">Literature, Publishing &amp; Translation Commission</span>
+          <span class="chip" data-i18n="c9">Merwas</span>
+          <span class="chip" data-i18n="c10">Costa</span>
+          <span class="chip" data-i18n="c11">Disney</span>
+          <span class="chip" data-i18n="c12">Hawi</span>
+          <span class="chip" data-i18n="c13">Aflam Productions</span>
+          <span class="chip" data-i18n="c14">&amp; many more&hellip;</span>
         </div>
       </div>
     </section>
@@ -248,29 +272,29 @@
 
     <section id="process">
       <div class="container">
-        <span class="eyebrow">How we work</span>
-        <h2 class="section-title">Our process</h2>
+        <span class="eyebrow" data-i18n="process_eyebrow">How we work</span>
+        <h2 class="section-title" data-i18n="process_title">Our process</h2>
         <div class="process">
-          <div class="step"><div><span class="dot"></span></div><div><h3>Discovery &amp; Qualification</h3><p>We align on objectives, scope, timeline, and budget before any creative work starts &mdash; ensuring every project is viable both creatively and financially.</p></div></div>
-          <div class="step"><div><span class="dot"></span></div><div><h3>Scope &amp; Financial Structure</h3><p>Deliverables, revision limits, timelines, and exclusions defined in clear terms and priced transparently.</p></div></div>
-          <div class="step"><div><span class="dot"></span></div><div><h3>Agreement &amp; Confirmation</h3><p>A formal proposal and agreement covering all terms; scheduling and production planning begin on signing.</p></div></div>
-          <div class="step"><div><span class="dot"></span></div><div><h3>Pre-Production Alignment</h3><p>Creative references, direction, and technical details collected in writing &mdash; minimizing revisions and miscommunication later.</p></div></div>
-          <div class="step"><div><span class="dot"></span></div><div><h3>Production Execution</h3><p>Structured milestones with controlled feedback intervals, progressing to the agreed scope.</p></div></div>
-          <div class="step"><div><span class="dot"></span></div><div><h3>Review &amp; Refinement</h3><p>Structured client feedback and revisions within agreed limits &mdash; organized and professional throughout.</p></div></div>
-          <div class="step"><div><span class="dot"></span></div><div><h3>Finalization &amp; Delivery</h3><p>Deliverables exported and delivered in agreed formats; credits, usage rights, and permissions reconfirmed, then archived securely.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3 data-i18n="st1t">Discovery &amp; Qualification</h3><p data-i18n="st1d">We align on objectives, scope, timeline, and budget before any creative work starts &mdash; ensuring every project is viable both creatively and financially.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3 data-i18n="st2t">Scope &amp; Financial Structure</h3><p data-i18n="st2d">Deliverables, revision limits, timelines, and exclusions defined in clear terms and priced transparently.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3 data-i18n="st3t">Agreement &amp; Confirmation</h3><p data-i18n="st3d">A formal proposal and agreement covering all terms; scheduling and production planning begin on signing.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3 data-i18n="st4t">Pre-Production Alignment</h3><p data-i18n="st4d">Creative references, direction, and technical details collected in writing &mdash; minimizing revisions and miscommunication later.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3 data-i18n="st5t">Production Execution</h3><p data-i18n="st5d">Structured milestones with controlled feedback intervals, progressing to the agreed scope.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3 data-i18n="st6t">Review &amp; Refinement</h3><p data-i18n="st6d">Structured client feedback and revisions within agreed limits &mdash; organized and professional throughout.</p></div></div>
+          <div class="step"><div><span class="dot"></span></div><div><h3 data-i18n="st7t">Finalization &amp; Delivery</h3><p data-i18n="st7d">Deliverables exported and delivered in agreed formats; credits, usage rights, and permissions reconfirmed, then archived securely.</p></div></div>
         </div>
       </div>
     </section>
 
     <section id="contact" style="padding-top:0">
       <div class="container">
-        <span class="eyebrow">Let's work together</span>
-        <h2 class="section-title">Contact us</h2>
+        <span class="eyebrow" data-i18n="contact_eyebrow">Let's work together</span>
+        <h2 class="section-title" data-i18n="contact_title">Contact us</h2>
         <div class="grid contact-grid">
-          <div class="card"><span class="label">Email</span><a href="mailto:info@brovah.com">info@brovah.com</a></div>
-          <div class="card"><span class="label">Phone / WhatsApp</span><a href="tel:+966556322154">+966 55 632 2154</a></div>
-          <div class="card"><span class="label">Social</span><a href="https://instagram.com/brovahstudio" rel="noopener">@brovahstudio</a></div>
-          <div class="card"><span class="label">Studio</span>al-Mashtal Creative Space, Diplomatic Quarter, Riyadh, Saudi Arabia</div>
+          <div class="card"><span class="label" data-i18n="l_email">Email</span><a href="mailto:info@brovah.com">info@brovah.com</a></div>
+          <div class="card"><span class="label" data-i18n="l_phone">Phone / WhatsApp</span><a href="tel:+966556322154">+966 55 632 2154</a></div>
+          <div class="card"><span class="label" data-i18n="l_social">Social</span><a href="https://instagram.com/brovahstudio" rel="noopener">@brovahstudio</a></div>
+          <div class="card"><span class="label" data-i18n="l_studio">Studio</span><span data-i18n="studio_addr">al-Mashtal Creative Space, Diplomatic Quarter, Riyadh, Saudi Arabia</span></div>
         </div>
       </div>
     </section>
@@ -280,9 +304,133 @@
   <footer>
     <div class="container footer-inner">
       <img src="assets/logo-gold.svg" alt="Brovah">
-      <p>&copy; 2026 Brovah Studio &mdash; Music &amp; Audio Production. All rights reserved.</p>
+      <p data-i18n="footer">&copy; 2026 Brovah Studio &mdash; Music &amp; Audio Production. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+  (function () {
+    "use strict";
+    var ar = {
+      nav_about: "من نحن",
+      nav_services: "خدماتنا",
+      nav_work: "أعمالنا",
+      nav_process: "آلية عملنا",
+      nav_cta: "لنعمل معًا",
+      hero_eyebrow: "بروفا ستوديو — إنتاج موسيقي وصوتي، الرياض",
+      hero_title: "أكثر من مجرد<br><span>استوديو!</span>",
+      hero_lead: "بروفا استوديو إنتاج موسيقي وصوتي طموح مقره المملكة العربية السعودية، يخدم عملاءه في منطقة الشرق الأوسط وشمال أفريقيا وما بعدها — حيث يلتقي الإبداع بالانضباط، ويُعامل كل مشروع كفنّ وعمل في آن واحد.",
+      hero_cta1: "ابدأ مشروعك",
+      hero_cta2: "شاهد أعمالنا",
+      stat_projects: "مشروع",
+      stat_clients: "عميل",
+      stat_collabs: "تعاون إبداعي",
+      stat_hours: "ساعة تسجيل",
+      stat_years: "سنة خبرة",
+      about_eyebrow: "من نحن",
+      about_title: "حيث يتردد صدى الإبداع",
+      about_p1: "نتخصص في الإنتاج الموسيقي الاحترافي والتسجيل والمكساج والخدمات الصوتية الإبداعية للفنانين والموسيقيين وصنّاع البودكاست والمخرجين والوكالات الإبداعية. تأسس بروفا عام 2024 على أسس من التنظيم والشفافية والشراكات طويلة الأمد، ويجمع بين الجودة التقنية العالية وثقافة استوديو ودودة وقريبة.",
+      about_p2: "مقرّنا في مساحة المشتل الإبداعية بحي السفارات في الرياض — ورسالتنا تمكين المبدعين في السعودية والمنطقة من خلال بيئة استوديو احترافية ومنظمة وملهمة، نبني فيها ليس فقط أغاني ومحتوى، بل مسيرات إبداعية طويلة الأمد.",
+      founder_quote: "في قلب بروفا إيمانٌ أحمله عميقًا: أن الإبداع حين يُعامل بعناية ونية واحترام يمكن أن ينمو إلى شيء استثنائي. لم يكن بروفا يومًا مجرد استوديو — فخلف كل أغنية أو بودكاست أو علامة أو صوت قصة تستحق أن تُسمع بوضوح وصدق وهدف.",
+      founder_name: "مقتبى علي",
+      founder_role: "المؤسس والرئيس التنفيذي، بروفا",
+      services_eyebrow: "ماذا نقدم",
+      services_title: "التخصصات والخدمات",
+      s1t: "الإنتاج الموسيقي",
+      s1d: "إنتاج متكامل من الفكرة إلى الماستر النهائي، بعناية ونية واحترام.",
+      s2t: "خدمات التسجيل",
+      s2d: "جلسات تسجيل احترافية في استوديو مجهز بالكامل ومعالج صوتيًا.",
+      s3t: "المكساج والماسترينغ",
+      s3d: "هندسة صوت عالمية المستوى تجعل كل أغنية تُسمع بأفضل صورة على كل الأجهزة.",
+      s4t: "البودكاست والمحتوى الصوتي",
+      s4d: "إنتاج بودكاست متكامل — تسجيل ومونتاج وتسليم.",
+      s5t: "الصوت التجاري والإعلامي",
+      s5d: "صوتيات للأفلام والإعلانات والإعلام — بما في ذلك تسجيل الفرق الحية متعدد المسارات.",
+      s6t: "تطوير الفنانين",
+      s6d: "شراكة إبداعية طويلة الأمد لبناء مسيرات فنية، لا مجرد أعمال.",
+      s7t: "الشراكات الإبداعية",
+      s7d: "تعاون منظم مع شركات التسجيلات والوكالات وشركات الإعلام.",
+      work_eyebrow: "مشاريع مختارة",
+      work_title: "بعض أعمالنا",
+      p1tag: "إنتاج كامل",
+      p1t: "بودكاست قمرا",
+      p1d: "بودكاست تقدمه قمر محمد، في حوارات مع شخصيات ملهمة من مختلف المجالات — أُنتج بالكامل في بروفا.",
+      p2tag: "جلسة حية · تسجيل ومكساج",
+      p2t: "جلسة غارم ستوديو الحية",
+      p2d: "إعادة تقديم حية لأغنية “Loved By Me” للفنانة الأمريكية السودانية سيلي بابكر، رُتبت وأُديت مباشرة بمشاركة نخبة من الموسيقيين المحترفين.",
+      p3tag: "فيلم · تسجيل متعدد المسارات",
+      p3t: "فيلم المهايطية",
+      p3d: "تسجيل حي متعدد المسارات لفرقة موسيقية لفيلم كوميدي جديد في 2026 للمخرج أحمد النجدي.",
+      clients_eyebrow: "يثقون بنا",
+      clients_title: "بعض عملائنا",
+      c1: "وزارة الثقافة",
+      c4: "ناشيونال جيوغرافيك",
+      c5: "هيئة الموسيقى",
+      c6: "المشتل",
+      c8: "هيئة الأدب والنشر والترجمة",
+      c9: "مرواس",
+      c10: "كوستا",
+      c11: "ديزني",
+      c12: "هاوي",
+      c13: "أفلام برودكشنز",
+      c14: "والمزيد…",
+      process_eyebrow: "كيف نعمل",
+      process_title: "آلية عملنا",
+      st1t: "الاستكشاف والتأهيل",
+      st1d: "نتوافق على الأهداف والنطاق والجدول الزمني والميزانية قبل بدء أي عمل إبداعي — لضمان جدوى كل مشروع إبداعيًا وماليًا.",
+      st2t: "النطاق والهيكل المالي",
+      st2d: "تحديد المخرجات وحدود التعديلات والجداول الزمنية والاستثناءات بوضوح، مع تسعير شفاف.",
+      st3t: "الاتفاق والتأكيد",
+      st3d: "عرض واتفاقية رسمية تشمل كل الشروط؛ وتبدأ الجدولة وتخطيط الإنتاج فور التوقيع.",
+      st4t: "التوافق قبل الإنتاج",
+      st4d: "جمع المراجع الإبداعية والتوجه والتفاصيل التقنية كتابةً — لتقليل التعديلات وسوء الفهم لاحقًا.",
+      st5t: "تنفيذ الإنتاج",
+      st5d: "مراحل منظمة مع فترات مراجعة محددة، وسير عمل وفق النطاق المتفق عليه.",
+      st6t: "المراجعة والتحسين",
+      st6d: "ملاحظات منظمة وتعديلات ضمن الحدود المتفق عليها — بتواصل مهني منظم طوال الوقت.",
+      st7t: "الإنهاء والتسليم",
+      st7d: "تصدير المخرجات وتسليمها بالصيغ المتفق عليها؛ مع تأكيد الحقوق والأذونات، ثم الأرشفة الآمنة.",
+      contact_eyebrow: "لنعمل معًا",
+      contact_title: "تواصل معنا",
+      l_email: "البريد الإلكتروني",
+      l_phone: "الهاتف وواتساب",
+      l_social: "التواصل الاجتماعي",
+      l_studio: "الاستوديو",
+      studio_addr: "مساحة المشتل الإبداعية، حي السفارات، الرياض، المملكة العربية السعودية",
+      footer: "© 2026 بروفا ستوديو — إنتاج موسيقي وصوتي. جميع الحقوق محفوظة.",
+      _title: "بروفا ستوديو — إنتاج موسيقي وصوتي، الرياض"
+    };
+
+    var en = {};
+    var enTitle = document.title;
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      en[el.getAttribute("data-i18n")] = el.innerHTML;
+    });
+
+    var toggle = document.getElementById("langToggle");
+
+    function apply(lang) {
+      var dict = lang === "ar" ? ar : en;
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        var key = el.getAttribute("data-i18n");
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.title = lang === "ar" ? ar._title : enTitle;
+      toggle.textContent = lang === "ar" ? "EN" : "عربي";
+      try { localStorage.setItem("brovah-lang", lang); } catch (e) {}
+    }
+
+    toggle.addEventListener("click", function () {
+      apply(document.documentElement.lang === "ar" ? "en" : "ar");
+    });
+
+    var saved = null;
+    try { saved = localStorage.getItem("brovah-lang"); } catch (e) {}
+    if (saved === "ar") apply("ar");
+  })();
+  </script>
 
 </body>
 </html>
